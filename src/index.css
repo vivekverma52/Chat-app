@@ -1,4 +1,4 @@
-/* Global settings */
+
 
 :root{
     --mainBgColor:rgba(20,20,31,11);
@@ -33,7 +33,6 @@ body{
   margin:20px auto;
 }
 
-/* Login & Register Pages */
 
 .auth--container{
   height: 100vh;
@@ -57,7 +56,6 @@ body{
 
 
 
-/* Form Input Styling */
 
 input[type="text"], input[type="password"], input[type="email"], textarea{
   background: var(--mainBgColor);
@@ -73,7 +71,6 @@ input[type="text"], input[type="password"], input[type="email"], textarea{
 }
 
 
-/* Button Styling */
 
 .btn{
   padding: 0.5em 1em;
@@ -100,7 +97,6 @@ input[type="text"], input[type="password"], input[type="email"], textarea{
   opacity: 0.7;
 }
 
-/* Header Styling */
 
 #header--wrapper{
   background-color: var(--mainBgColor);
@@ -122,7 +118,7 @@ input[type="text"], input[type="password"], input[type="email"], textarea{
   color: #8db3dd;
 }
 
-/* Room Styling */
+
 
 .room--container{
   padding: 2em;
@@ -164,7 +160,7 @@ input[type="text"], input[type="password"], input[type="email"], textarea{
   border-radius: 20px;
   width:fit-content;
   max-width: 100%;
-  word-wrap: break-word; /* added */
+  word-wrap: break-word; 
 }
 
 .message--body--owner{

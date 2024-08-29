@@ -2,8 +2,12 @@ import  { useState , useEffect  }from 'react'
 import client, { databases, DATABASE_ID, COLLECTION_ID_MESSAGES } from '../appwriteConfig'
 import { ID, Query } from 'appwrite'
 import { Trash2 } from 'react-feather'
+import Header from '../components/Header'
+import { useAuth } from '../utils/AuthContext'
 
 const Room = () => {
+
+    const {user} = useAuth()
 
     const [messages, setMessages] = useState([])
     const [messageBody, setMessageBody] = useState('')
@@ -25,7 +29,6 @@ const Room = () => {
             }
         });
 
-        console.log('unsubscribe:', unsubscribe)
       
         return () => {
           unsubscribe();
@@ -37,19 +40,22 @@ const Room = () => {
         e.preventDefault()
 
         let payload = { 
-            body:messageBody
+            user_id:user.$id,
+            username:user.name,
+            body:messageBody,
 
         }
+        
        
         let response = await databases.createDocument(
             DATABASE_ID,
             COLLECTION_ID_MESSAGES,
             ID.unique(),
             payload,
+           
         )
         console.log(response)
 
-       // setMessages(prevState => [response, ...messages])
 
         setMessageBody('')
     }
@@ -68,13 +74,14 @@ const Room = () => {
 
     const deleteMessage = async (message_id) => {
       databases.deleteDocument(DATABASE_ID,COLLECTION_ID_MESSAGES,message_id);
-       // setMessages(prevState => messages.filter(message => message.$id !== message_id))
+       
     }
 
   return (
     <main className="container">
 
         <div className="room--container">
+            <Header />
 
             <form onSubmit={handleSubmit} id ="message--form">
                 <div>
@@ -97,7 +104,14 @@ const Room = () => {
         {messages.map((message) => ( 
             <div key={message.$id} className="message-wrapper">
                 <div className="message--header">
-                <small className="message-timestamp">{new Date(message.$createdAt).toLocaleString()}</small>
+                    <p>{message ?.username ? (
+                        <span>{message.username}</span>
+                    ):(
+                        <span>Anonymous User</span>
+                    )}
+                        <small className="message-timestamp">{new Date(message.$createdAt).toLocaleString()}</small>
+                    </p>
+                
 
                 <Trash2 
                 className="delete--btn"
